@@ -1,0 +1,35 @@
+spring.cloud.stream:
+  function:
+    definition: studentProcessor
+  bindings:
+    studentProcessor-in-0:
+      destination: students
+    studentProcessor-out-0:
+      destination: virgin.students
+  kafka:
+    streams:
+      binder:
+        configuration:
+          spring.json.trusted.packages: '*'
+    bindings:
+      studentProcessor-in-0:
+        consumer:
+          configuration:
+            value:
+              deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      studentProcessor-out-0:
+        producer:
+          configuration:
+            value:
+              serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    binder:
+      brokers:
+        - localhost:9091
+        - localhost:9092
+#spring:
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          configuration:
+#            spring.json.trusted.packages: '*'

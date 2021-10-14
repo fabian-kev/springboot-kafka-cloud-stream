@@ -1,0 +1,29 @@
+server.port: 8083
+spring.cloud.stream:
+  function:
+    definition: studentConsumer
+  bindings:
+    studentConsumer-in-0:
+      destination: virgin.students
+  kafka:
+    streams:
+      binder:
+        configuration:
+          spring.json.trusted.packages: '*'
+    bindings:
+      studentProcessor-in-0:
+        consumer:
+          configuration:
+            value:
+              deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    binder:
+      brokers:
+        - localhost:9091
+        - localhost:9092
+#spring:
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          configuration:
+#            spring.json.trusted.packages: '*'
